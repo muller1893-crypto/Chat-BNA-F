@@ -15,14 +15,11 @@
   --r:16px;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{overflow-x:hidden;height:100%}
 body{
   margin:0; color:var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:
-    radial-gradient(900px 500px at 20% -10%, rgba(79,140,255,.18), transparent 60%),
-    radial-gradient(900px 500px at 90% 0%, rgba(34,197,94,.09), transparent 65%),
-    var(--bg);
+  background: url('assets/screen0-bg.png') center/cover fixed no-repeat, #050b14;
 }
 a{ color:inherit; text-decoration:none }
 
@@ -294,9 +291,8 @@ a{ color:inherit; text-decoration:none }
   <header class="top-bar">
     <div class="brand"><span class="brand-dot"></span>BrainMode</div>
     <nav class="nav-desktop">
-      <a href="chat.html">Chat</a>
-      <a href="index.html">Exercícios</a>
-      <a href="brainmode.html">Treino</a>
+      <a href="menu.html">Menu</a>
+      <a href="setup.html?mode=treino">Configurar</a>
     </nav>
   </header>
 

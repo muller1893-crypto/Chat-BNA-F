@@ -16,14 +16,11 @@
       --accent1:#38bdf8; --accent2:#22c55e;
     }
     *{box-sizing:border-box}
-    body{
+    body{overflow-x:hidden;
       margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
       color:var(--txt);
       min-height:100vh;
-      background:
-        radial-gradient(1200px 600px at 70% 20%, rgba(56,189,248,.20), transparent 55%),
-        radial-gradient(900px 500px at 20% 70%, rgba(168,85,247,.18), transparent 55%),
-        linear-gradient(180deg,var(--bg2),var(--bg1));
+      background: url('assets/screen0-bg.png') center/cover fixed no-repeat, #050b14;
       padding: 18px 14px 40px;
     }
     header{
