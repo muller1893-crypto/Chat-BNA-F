@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BrainMode — Exercícios</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root{
+      --bg1:#061026; --bg2:#091a3a;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.12);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --accent1:#38bdf8; --accent2:#22c55e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--txt);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 600px at 70% 20%, rgba(56,189,248,.20), transparent 55%),
+        radial-gradient(900px 500px at 20% 70%, rgba(168,85,247,.18), transparent 55%),
+        linear-gradient(180deg,var(--bg2),var(--bg1));
+      padding: 18px 14px 40px;
+    }
+    header{
+      width:min(1100px,100%);
+      margin:0 auto 14px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; align-items:center; gap:10px;}
+    .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),#a855f7);}
+    .brand b{font-size:18px;}
+    .links{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    .a{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color:var(--txt);
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight:700;
+      font-size: 13px;
+    }
+    .a.primary{
+      border:none;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color:#071020;
+    }
+
+    .wrap{width:min(1100px,100%); margin:0 auto; display:flex; justify-content:center;}
+    .card{
+      width: min(720px,100%);
+      background: linear-gradient(180deg, var(--card2), var(--card));
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .cardTop{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+    h1{margin:0; font-size:22px;}
+    .meta{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+    .badge{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .prompt{
+      margin-top:14px;
+      border:1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(0,0,0,.16);
+      font-size: 20px;
+    }
+    .alts{margin-top:14px;}
+    .altsTitle{color: var(--muted); font-size: 12px; letter-spacing:.12em; margin-bottom:10px;}
+    .opt{
+      display:flex; align-items:center; gap:12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      padding: 14px;
+      border-radius: 16px;
+      cursor:pointer;
+      user-select:none;
+      margin-bottom:10px;
+    }
+    .opt .k{
+      width:36px; height:36px; border-radius: 999px;
+      display:grid; place-items:center;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      font-weight:800;
+    }
+    .opt[data-selected="true"]{
+      border-color: rgba(56,189,248,.55);
+      background: rgba(56,189,248,.12);
+    }
+    .free{
+      margin-top:10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+    }
+    .free label{display:block; font-size:12px; color: var(--muted); margin-bottom:8px;}
+    input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      outline:none;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    button{
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color:var(--txt);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    button.primary{
+      border:none;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color:#071020;
+    }
+    .result{
+      margin-top: 12px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      border-radius: 14px;
+      padding: 12px;
+      color: var(--muted);
+      display:none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="dot"></span><b>BrainMode</b></div>
+    <div class="links">
+      <a class="a" href="menu.html">Menu</a>
+      <a class="a" href="setup.html?mode=exercise">Configurar</a>
+      <a class="a primary" id="openTreino" href="setup.html?mode=treino">Ir pro Treino</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="cardTop">
+        <div>
+          <h1>Exercício</h1>
+          <div class="meta">
+            <div class="badge">Tópico: <span id="t-topic">—</span></div>
+            <div class="badge">Dificuldade: <span id="t-difficulty">—</span></div>
+          </div>
+        </div>
+        <button id="btnNew" type="button">Novo</button>
+      </div>
+
+      <div class="prompt" id="t-prompt">Carregando…</div>
+
+      <div class="alts" id="alts">
+        <div class="altsTitle">ALTERNATIVAS</div>
+        <div id="optList"></div>
+      </div>
+
+      <div class="free">
+        <label for="freeAnswer">RESPOSTA LIVRE</label>
+        <input id="freeAnswer" placeholder="Digite sua resposta (opcional) — útil pra cálculo / rascunho" />
+      </div>
+
+      <div class="row">
+        <button class="primary" id="btnSolve" type="button">Responder</button>
+        <button id="btnReset" type="button">Limpar</button>
+      </div>
+
+      <div class="result" id="resultBox"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentExercise = null;
+    let selectedOption = null;
+
+    async function fetchExercise(){
+      const params = new URLSearchParams(window.location.search);
+      const desiredTopic = (params.get("topic") || localStorage.getItem("bm_topic") || "").toLowerCase().trim();
+      const desiredDiff  = (params.get("difficulty") || localStorage.getItem("bm_difficulty") || "").toString().trim();
+      const endpoints = ["/exercise/next", "/exercises-random", "/exercise/random"];
+
+      const matchesDesired = (ex) => {
+        if(!ex) return false;
+        const exTopic = (ex.topic || ex.tema || ex.subject || "").toString().toLowerCase().trim();
+        const exDiff  = (ex.difficulty ?? ex.dificuldade ?? "").toString().trim();
+        if(desiredTopic && exTopic && exTopic !== desiredTopic) return false;
+        if(desiredDiff && exDiff && exDiff !== desiredDiff) return false;
+        return true;
+      };
+
+      const MAX_TRIES = 8;
+      for(const url of endpoints){
+        for(let i=0;i<MAX_TRIES;i++){
+          try{
+            const r = await fetch(url, { cache:"no-store" });
+            if(!r.ok) throw new Error("HTTP " + r.status);
+            const data = await r.json();
+            const ex = data.exercise || data.data?.exercise || data;
+            if(matchesDesired(ex)) return ex;
+          }catch(e){}
+        }
+      }
+      throw new Error("Falha ao obter exercício.");
+    }
+
+    function normalizeExercise(ex){
+      return {
+        id: ex.id ?? ex.exercise_id ?? ex.exerciseId ?? null,
+        topic: ex.topic ?? ex.tema ?? ex.subject ?? "—",
+        difficulty: ex.difficulty ?? ex.dificuldade ?? "—",
+        prompt: ex.prompt ?? ex.question ?? ex.enunciado ?? "—",
+        options: ex.options ?? ex.alternatives ?? ex.alternativas ?? [],
+      };
+    }
+
+    function renderExercise(ex){
+      currentExercise = normalizeExercise(ex);
+      selectedOption = null;
+      document.getElementById("t-topic").textContent = currentExercise.topic;
+      document.getElementById("t-difficulty").textContent = currentExercise.difficulty;
+      document.getElementById("t-prompt").textContent = currentExercise.prompt;
+
+      const optList = document.getElementById("optList");
+      optList.innerHTML = "";
+      const letters = ["A","B","C","D","E","F"];
+      if(Array.isArray(currentExercise.options) && currentExercise.options.length){
+        document.getElementById("alts").style.display = "block";
+        currentExercise.options.forEach((opt, idx) => {
+          const el = document.createElement("div");
+          el.className = "opt";
+          el.dataset.selected = "false";
+          el.innerHTML = `<div class="k">${letters[idx] || (idx+1)}</div><div class="v">${String(opt)}</div>`;
+          el.addEventListener("click", () => {
+            [...optList.querySelectorAll(".opt")].forEach(o => o.dataset.selected="false");
+            el.dataset.selected="true";
+            selectedOption = String(opt);
+          });
+          optList.appendChild(el);
+        });
+      }else{
+        document.getElementById("alts").style.display = "none";
+      }
+
+      document.getElementById("freeAnswer").value = "";
+      hideResult();
+    }
+
+    function showResult(msg){
+      const box = document.getElementById("resultBox");
+      box.style.display = "block";
+      box.textContent = msg;
+    }
+    function hideResult(){
+      const box = document.getElementById("resultBox");
+      box.style.display = "none";
+      box.textContent = "";
+    }
+
+    async function loadNew(){
+      try{
+        const ex = await fetchExercise();
+        renderExercise(ex);
+      }catch(e){
+        showResult("Não consegui carregar um exercício agora. Tenta de novo em alguns segundos.");
+      }
+    }
+
+    async function solve(){
+      if(!currentExercise) return;
+      const free = document.getElementById("freeAnswer").value.trim();
+      const answer = free || selectedOption || "";
+      if(!answer){
+        showResult("Escolha uma alternativa ou digite uma resposta.");
+        return;
+      }
+      try{
+        const r = await fetch("/solve", {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify({
+            exercise_id: currentExercise.id,
+            answer,
+            topic: currentExercise.topic,
+            difficulty: currentExercise.difficulty
+          })
+        });
+        const data = await r.json().catch(()=> ({}));
+        if(!r.ok){
+          showResult("Erro ao enviar resposta. (" + (data.error || r.status) + ")");
+          return;
+        }
+        if(data.correct === true){
+          showResult("✅ Boa! Você acertou. Se quiser, clique em “Ir pro Treino” para entender o porquê e consolidar.");
+        }else if(data.correct === false){
+          showResult("⚠️ Quase. Você errou — mas dá pra melhorar. Clique em “Ir pro Treino” pra destrinchar isso com o BNA.");
+        }else{
+          showResult("Resposta enviada. (O feedback completo fica no modo Treino.)");
+        }
+      }catch(e){
+        showResult("Falha de rede ao enviar resposta.");
+      }
+    }
+
+    document.getElementById("btnNew").addEventListener("click", loadNew);
+    document.getElementById("btnSolve").addEventListener("click", solve);
+    document.getElementById("btnReset").addEventListener("click", () => {
+      selectedOption = null;
+      document.getElementById("freeAnswer").value = "";
+      const optList = document.getElementById("optList");
+      [...optList.querySelectorAll(".opt")].forEach(o => o.dataset.selected="false");
+      hideResult();
+    });
+
+    // initial
+    loadNew();
+  </script>
+</body>
+</html>

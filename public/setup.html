@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BrainMode — Configurar sessão</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root{
+      --bg1:#061026; --bg2:#091a3a;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.12);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --accent1:#38bdf8; --accent2:#22c55e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--txt);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 600px at 70% 20%, rgba(56,189,248,.20), transparent 55%),
+        radial-gradient(900px 500px at 20% 70%, rgba(168,85,247,.18), transparent 55%),
+        linear-gradient(180deg,var(--bg2),var(--bg1));
+      display:flex; align-items:center; justify-content:center;
+      padding: 24px 16px;
+    }
+    .wrap{width:min(980px,100%); display:grid; grid-template-columns: 1.2fr .8fr; gap:18px;}
+    @media (max-width: 820px){ .wrap{grid-template-columns:1fr;} }
+
+    .panel{
+      background: linear-gradient(180deg, var(--card2), var(--card));
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 10px;
+    }
+    .brand{display:flex; align-items:center; gap:10px;}
+    .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),#a855f7);}
+    .brand b{font-size:18px; letter-spacing:.2px;}
+    .pill{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      padding: 8px 10px;
+      border-radius:999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    h1{margin: 10px 0 6px; font-size: 26px; line-height:1.1;}
+    p{margin:0; color: var(--muted);}
+
+    .grid{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:16px;}
+    @media (max-width: 520px){ .grid{grid-template-columns:1fr;} }
+
+    label{display:block; font-size:12px; color: var(--muted); margin: 0 0 8px;}
+    select, input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+      color: var(--txt);
+      outline:none;
+    }
+
+    .diff{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .chip{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: var(--txt);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      user-select:none;
+      font-weight:600;
+      min-width: 56px;
+      text-align:center;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+    }
+    .chip:hover{transform: translateY(-1px);}
+    .chip[data-active="true"]{
+      border-color: rgba(56,189,248,.55);
+      background: rgba(56,189,248,.16);
+    }
+
+    .actions{display:flex; gap:10px; margin-top: 14px; flex-wrap:wrap;}
+    .btn{
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: var(--txt);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn.primary{
+      border: none;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color:#071020;
+    }
+    .btn:active{transform: translateY(1px);}
+    .side h2{margin: 6px 0 8px; font-size: 16px;}
+    .k{margin-top:12px; padding:12px; border:1px solid var(--stroke); border-radius: 14px; background: rgba(255,255,255,.05);}
+    .k b{display:block; margin-bottom:4px;}
+    .k span{color: var(--muted); font-size: 13px;}
+    .small{font-size: 12px; color: var(--muted); margin-top: 12px;}
+    a{color: #7dd3fc; text-decoration:none;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="top">
+        <div class="brand"><span class="dot"></span><b>BrainMode</b></div>
+        <div class="pill" id="modePill">Configurar</div>
+      </div>
+
+      <h1>Escolha o foco da sessão</h1>
+      <p>Defina o tópico e a dificuldade. Depois, a gente te leva direto para a prática (sem drama e sem labirinto de botão).</p>
+
+      <div class="grid">
+        <div>
+          <label for="topic">Tópico</label>
+          <select id="topic">
+            <option value="">Aleatório</option>
+            <option value="aritmetica">Aritmética</option>
+            <option value="algebra">Álgebra</option>
+            <option value="trigonometria">Trigonometria</option>
+            <option value="geometria">Geometria</option>
+            <option value="estatistica">Estatística</option>
+            <option value="logica">Lógica</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Dificuldade</label>
+          <div class="diff" id="diff">
+            <div class="chip" data-v="">Auto</div>
+            <div class="chip" data-v="1">1</div>
+            <div class="chip" data-v="2">2</div>
+            <div class="chip" data-v="3">3</div>
+            <div class="chip" data-v="4">4</div>
+            <div class="chip" data-v="5">5</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="backBtn" type="button">← Voltar ao menu</button>
+        <button class="btn primary" id="startBtn" type="button">Começar</button>
+      </div>
+
+      <div class="small">Dica: se você deixar “Aleatório” e “Auto”, o sistema mantém o comportamento atual.</div>
+    </div>
+
+    <div class="panel side">
+      <h2>O que vai acontecer quando você clicar em “Começar”</h2>
+      <div class="k">
+        <b>Exercícios</b>
+        <span>Você entra na tela de exercício e já recebe um item para resolver.</span>
+      </div>
+      <div class="k">
+        <b>Treino (BrainMode)</b>
+        <span>Você entra no modo treino com feedback e chat no mesmo fluxo.</span>
+      </div>
+      <div class="k">
+        <b>Chat</b>
+        <span>Você vai direto para a demo do chat para conhecer o BNA.</span>
+      </div>
+      <div class="small">Se quiser, depois a gente deixa esses tópicos dinâmicos vindo do banco. Por enquanto: foco em rodar e demonstrar.</div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const mode = (params.get("mode") || "exercise").toLowerCase();
+    const modeLabel = mode === "treino" ? "Treino (BrainMode)" : (mode === "chat" ? "Chat" : "Exercícios");
+    document.getElementById("modePill").textContent = modeLabel;
+
+    // Defaults from localStorage
+    const topicSel = document.getElementById("topic");
+    const diffWrap = document.getElementById("diff");
+    const savedTopic = localStorage.getItem("bm_topic") || "";
+    const savedDiff = localStorage.getItem("bm_difficulty") || "";
+
+    if(savedTopic) topicSel.value = savedTopic;
+
+    function setActiveDiff(v){
+      [...diffWrap.querySelectorAll(".chip")].forEach(ch => ch.dataset.active = (ch.dataset.v === v) ? "true" : "false");
+      localStorage.setItem("bm_difficulty", v);
+    }
+    // init
+    setActiveDiff(savedDiff);
+
+    diffWrap.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if(!chip) return;
+      setActiveDiff(chip.dataset.v);
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => location.href = "menu.html");
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+      const topic = topicSel.value || "";
+      const difficulty = localStorage.getItem("bm_difficulty") || "";
+      localStorage.setItem("bm_topic", topic);
+
+      if(mode === "chat"){
+        location.href = "chat.html";
+        return;
+      }
+      const target = mode === "treino" ? "brainmode.html" : "exercise.html";
+      const qp = new URLSearchParams();
+      if(topic) qp.set("topic", topic);
+      if(difficulty) qp.set("difficulty", difficulty);
+      location.href = target + (qp.toString() ? ("?" + qp.toString()) : "");
+    });
+  </script>
+</body>
+</html>
